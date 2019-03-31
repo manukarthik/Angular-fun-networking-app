@@ -1,0 +1,24 @@
+<div *ngIf="!authService.isAuthenticated" class="alert alert-success" role="alert">
+  <h4 class="alert-heading">Please register!</h4>
+  <p>This app was built by manukarthik. Please contact him for any questions.</p>
+
+
+</div>
+<mat-card *ngIf="authService.isAuthenticated">
+  <mat-card-header>
+    <mat-card-title style="margin-left:-8px;">
+      <h4>
+        <i class="material-icons">local_post_office</i> Wanna post something .?</h4>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup] = "messageForm" (ngSubmit)="post(messageForm)">
+      <mat-form-field style="width:100%;">
+        <textarea matInput placeholder="postMsg" formControlName = "postMsg"  name="postMsg" type="text"></textarea>
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary">Post..
+        <i class="material-icons">near_me</i>
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,15 @@
+<div *ngFor="let message of apiService.messages">
+<mat-card (click)="apiService.selectMessage(message)">
+<i class="material-icons">format_list_bulleted</i>{{ message.msg }}
+<button mat-button (click)="edit()" *ngIf="auth.isAuthenticated">Edit</button>
+  </mat-card>
+
+</div>
+<form>
+<mat-input-container style="width:100%;" *ngIf="edit_clicked">
+    <textarea [(ngModel)]="message.msg" matInput placeholder="message" name="message " type="text"></textarea>
+  </mat-input-container>
+<button (click)="apiService.putMessage(message)" mat-raised-button color="primary">Edit..
+    <i class="material-icons">near_me</i>
+  </button>
+</form>
