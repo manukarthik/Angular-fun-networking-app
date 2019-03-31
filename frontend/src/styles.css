@@ -26,5 +26,4 @@ h1 h2 h3 h4 h5 h6 p {
    direction: ltr;
    -webkit-font-feature-settings: 'liga';
    -webkit-font-smoothing: antialiased;
-
  }
