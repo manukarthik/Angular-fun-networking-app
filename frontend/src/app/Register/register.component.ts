@@ -43,6 +43,9 @@ export class RegisterComponent {
             imgname: [''],
             description : ['']
         }, {validator: this.checkPasswords })
+     this.registerForm.valueChanges.subscribe((e) => {
+       this.logValidationErrors(this.registerForm);
+     });
     }
 
  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
@@ -60,7 +63,8 @@ logValidationErrors(group : FormGroup) {
           this.logValidationErrors(abstractControl);
       }
       else {
-          if(abstractControl && !abstractControl.valid) {
+        this.formErrors[key] = '';
+          if(abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty)) {
               const messages = this.validationMessages[key];
               for(const errorKey in abstractControl.errors) {
                   if(errorKey)
@@ -72,9 +76,6 @@ logValidationErrors(group : FormGroup) {
 }
 
 onSubmit() : void {
-    this.logValidationErrors(this.registerForm);
-    console.log(this.formErrors);
     this.authService.registerUser(this.registerForm)
-    
 }
 }
