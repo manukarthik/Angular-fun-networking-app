@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { AuthService } from "../auth.service";
-import { ApiService } from '../api.service';
-import { MyErrorStateMatcher } from './MyErrorStateMatcher';
+import {Component, ViewChild} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms'
+import {AuthService} from "../auth.service";
+import {ApiService} from '../api.service';
+import {MyErrorStateMatcher} from './MyErrorStateMatcher';
 
 @Component({
     selector: 'register',
@@ -20,24 +20,26 @@ export class RegisterComponent {
 
     validationMessages = {
         'email' : {
-            'required' : 'email is required'
+            'required' : 'email is required',
+            'domainName' : 'email should be of type @gmail.com'
         },
         'password' : {
              'required' : 'password is required'
         }
 
-    }
+    };
 
     formErrors = {
         'email' : '',
         'password' : ''
-    }
+    };
     
 
     ngOnInit() {
-        this.registerForm = this.fb.group({
-            email : ['', Validators.required],
-            password : ['', Validators.required],
+      const {required} = Validators;
+      this.registerForm = this.fb.group({
+            email : ['', [required, emailDomain]],
+            password : ['', required],
             confirmPassword: [''],
             name:  [''],
             imgname: [''],
@@ -79,3 +81,14 @@ onSubmit() : void {
     this.authService.registerUser(this.registerForm)
 }
 }
+
+function emailDomain (control: AbstractControl) : {[key : string] : any } | null  {
+  const email : string = control.value;
+  const domain = email.substring(email.lastIndexOf('@')+1);
+  if (_.toLower(domain) === 'gmail.com' || email === '') {
+    return null;
+  }
+  return {domainName: true};
+}
+
+

@@ -17,6 +17,7 @@ import { PostComponent } from "./Post/post.component";
 import { AuthInterceptorService } from "./authInterceptor.service";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NavService } from './nav.service';
+
 const routes =[
 
 { path: '', component: PostComponent },
