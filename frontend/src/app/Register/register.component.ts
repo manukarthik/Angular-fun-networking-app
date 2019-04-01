@@ -1,15 +1,16 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms'
 import {AuthService} from "../auth.service";
 import {ApiService} from '../api.service';
 import {MyErrorStateMatcher} from './MyErrorStateMatcher';
+import {CustomValidators} from "../shared/custom.validators";
 
 @Component({
     selector: 'register',
     templateUrl:'register.component.html',
 
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
     registerForm : FormGroup;
     matcher = new MyErrorStateMatcher();
     @ViewChild('formReg') public formRegister: any;
@@ -38,7 +39,7 @@ export class RegisterComponent {
     ngOnInit() {
       const {required} = Validators;
       this.registerForm = this.fb.group({
-            email : ['', [required, emailDomain]],
+            email : ['', [required, CustomValidators.emailDomain('gmail.com')]],
             password : ['', required],
             confirmPassword: [''],
             name:  [''],
@@ -82,13 +83,6 @@ onSubmit() : void {
 }
 }
 
-function emailDomain (control: AbstractControl) : {[key : string] : any } | null  {
-  const email : string = control.value;
-  const domain = email.substring(email.lastIndexOf('@')+1);
-  if (_.toLower(domain) === 'gmail.com' || email === '') {
-    return null;
-  }
-  return {domainName: true};
-}
+
 
 

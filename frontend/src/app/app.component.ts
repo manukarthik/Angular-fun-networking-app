@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { ApiService } from "./api.service";
 import { AuthService } from './auth.service';
 import { NavService } from './nav.service';
-var _ = require('lodash');
+
+var _: any;
+_ = require('lodash');
 
 @Component({
   selector: "app-root",
