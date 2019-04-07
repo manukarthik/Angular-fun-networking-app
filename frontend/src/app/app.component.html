@@ -8,4 +8,5 @@
 <button mat-button *ngIf="!authService.isAuthenticated" routerLink="/login">Login</button>
 <button mat-button *ngIf="authService.isAuthenticated" (click)="authService.logout()"><i class="material-icons">perm_identity</i>Logout</button>
 </mat-toolbar>
+<div *ngIf = "showLoadIndicator" style="height:200px;background:red;display: block">..Loading</div>
 <router-outlet></router-outlet>

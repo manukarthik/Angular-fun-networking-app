@@ -17,26 +17,32 @@ import { PostComponent } from "./Post/post.component";
 import { AuthInterceptorService } from "./authInterceptor.service";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NavService } from './nav.service';
+import { RegisterCanDeactivateGuardService } from './Register/register-can-deactivate-guard.service';
+import { PageNotFoundComponent } from './page-not-found.component';
+import { ProfileGuardService } from './Profile/profile-guard.service';
 
 const routes =[
 
 { path: '', component: PostComponent },
-{path:  'register', component: RegisterComponent},
+{path:  'register', component: RegisterComponent, canDeactivate : [RegisterCanDeactivateGuardService]},
 { path: 'login', component: LoginComponent },
 { path: 'users', component: UsersComponent },
-{ path: 'profile/:id', component: ProfileComponent }
+{ path: 'profile/:id', 
+  component: ProfileComponent ,
+  canActivate : [ProfileGuardService]},
+{path : 'notfound', component : PageNotFoundComponent}
 
 ]
 @NgModule({
   declarations: [
-    AppComponent, MessagesComponent, RegisterComponent, LoginComponent, UsersComponent, ProfileComponent, PostComponent
+    AppComponent, MessagesComponent, RegisterComponent, LoginComponent, UsersComponent, ProfileComponent, PostComponent, PageNotFoundComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
     FormsModule, MatButtonModule, MatCardModule, MatToolbarModule, RouterModule.forRoot(routes), MatInputModule,
     BrowserAnimationsModule, MatListModule, MatSnackBarModule, ReactiveFormsModule  
   ],
-  providers: [ApiService, AuthService, NavService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService,multi:true}],
+  providers: [ApiService, AuthService, NavService, RegisterCanDeactivateGuardService, ProfileGuardService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

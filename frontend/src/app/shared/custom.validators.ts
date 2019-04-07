@@ -1,5 +1,6 @@
 import {AbstractControl} from "@angular/forms";
-
+var _: any;
+_ = require('lodash');
 export class CustomValidators {
   static emailDomain(domainName) {
     return ((control: AbstractControl) : {[key : string] : any } | null => {

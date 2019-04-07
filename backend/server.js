@@ -18,6 +18,9 @@ app.get('/posts/:id', async(req, res) => {
     var author = req.params.id
     var posts = await Post.find({ author })
     res.send(posts)
+}, (err)=> {
+    console.log("###",err);
+    return err;
 })
 
 app.put('update/:id', auth.checkAuthenticated, (req,res)=>{
